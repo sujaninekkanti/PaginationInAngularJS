@@ -1,0 +1,42 @@
+<html>
+<head>
+	<title>Pagination Example in AngularJS</title>
+	<script type="text/javascript" src ="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+	<script src ="dirPagination.js"></script>
+</head>
+<body ng-app="angularpagination" ng-controller="mydatactrl">
+<form>
+Search <input type ="text" ng-model="search">
+</form>
+	<table border="1">
+		<tr>
+			<th>Id</th>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Age</th>
+		</tr>
+		<tr dir-paginate ="user in users | filter:search |itemsPerPage:5">
+		
+			<td>{{user.id}}</td>
+			<td>{{user.first_name}}</td>
+			<td>{{user.last_name}}</td>
+			<td>{{user.Age}}</td>
+		</tr>
+	</table>
+	<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" ></dir-pagination-controls>
+</body>
+
+<script type="text/javascript">
+
+	var app = angular.module('angularpagination',['angularUtils.directives.dirPagination']);
+	
+	app.controller('mydatactrl', function($scope,$http){
+		$scope.users =[];
+		
+		$http.get('test.json').success(function(response){
+			
+			$scope.users = response;
+		});
+	});
+</script>
+</html>
